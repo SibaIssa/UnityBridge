@@ -1,4 +1,5 @@
 using System;
+using ProBridge.ROS.Msgs.Geometry;
 using ProBridge.ROS.Msgs.Std;
 
 namespace ProBridge.ROS.Msgs
@@ -249,10 +250,60 @@ namespace ProBridge.ROS.Msgs.Geometry
         public string child_frame_id;
         public Transform transform = new Transform();
     }
+
+    public class PointField : IRosMsg
+    {
+        string IRosMsg.GetRosType() { return "geometry_msgs.msg.PointField"; }
+
+        // datatype enum
+        int INT8 = 1;
+        int UINT8 = 2;
+        int INT16 = 3;
+        int UINT16 = 4;
+        int INT32 = 5;
+        int UINT32 = 6;
+        int FLOAT32 = 7;
+        int FLOAT64 = 8;
+
+        StdString name;
+        StdInt offset;
+        StdInt datatype;
+        StdInt count;
+    }
 }
 
 namespace ProBridge.ROS.Msgs.Sensors
 {
+    public class Lidar : IRosMsg, IStamped
+    {
+        string IRosMsg.GetRosType() { return "sensor_msgs.msg.Lidar"; }
+
+        public Header header { get; set; } = new Header();
+
+        // PointCloud2 Specific
+
+        public StdInt height;
+        public StdInt width;
+        public PointField[] fields;
+        public StdBool is_bigendian;
+        public StdInt point_step;
+        public StdInt row_step;
+        public StdInt[] data;
+        public StdBool is_dense;
+
+        // LaserScan Specific
+
+        public StdFloat angle_min;
+        public StdFloat angle_max;
+        public StdFloat angle_increment;
+        public StdFloat time_increment;
+        public StdFloat scan_time;
+        public StdFloat range_min;
+        public StdFloat range_max;
+        public StdFloat[] ranges;
+        public StdFloat[] intensities;
+    }
+
     public class Imu : IRosMsg, IStamped
     {
         string IRosMsg.GetRosType() { return "sensor_msgs.msg.Imu"; }
@@ -388,22 +439,22 @@ namespace ProBridge.ROS.Msgs.Chassis
 
         public Header header { get; set; } = new Header();
 
-        public float battery;                           // Напряжение АКБ Вольт
-        public float fuel_available;                    // Запас топлива л
-        public float fuel_consumption;                  // Текущий (усредненный за мин) расход топлива л/ч
-        public sbyte engine_state;                      // Статус ДВС
-        public sbyte engine_temp;                       // Температура ДВС градус
-        public UInt16 engine_value;                     // Обороты ДВС об/мин
-        public sbyte transmission_state;                // Статус АКПП
-        public sbyte transmission_value;                // Значение передачи АКПП
-        public sbyte transmission_temp;                 // Температура АКПП градус
-        public sbyte transfer_value;                    // Значение раздаточной коробки
-        public sbyte main_brake_state;                  // Статус тормозной системы
-        public sbyte parking_brake_state;               // Статус парковочного тормоза
-        public sbyte rail_state;                        // Статус рулевой рейки
-        public sbyte[] parts_temp = new sbyte[0];       // Температура составных частей РТС градус
-        public sbyte[] general_state = new sbyte[0];    // Статусы датчиков, приборов освещения, индикаторы, и т.д.
-        public bool sto;                                // Разрешение движения
+        public float battery;                           // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+        public float fuel_available;                    // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ
+        public float fuel_consumption;                  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ) пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ/пїЅ
+        public sbyte engine_state;                      // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
+        public sbyte engine_temp;                       // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        public UInt16 engine_value;                     // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ/пїЅпїЅпїЅ
+        public sbyte transmission_state;                // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+        public sbyte transmission_value;                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+        public sbyte transmission_temp;                 // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        public sbyte transfer_value;                    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        public sbyte main_brake_state;                  // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        public sbyte parking_brake_state;               // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        public sbyte rail_state;                        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+        public sbyte[] parts_temp = new sbyte[0];       // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        public sbyte[] general_state = new sbyte[0];    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅ.пїЅ.
+        public bool sto;                                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     }
 
     [Serializable]
@@ -412,15 +463,15 @@ namespace ProBridge.ROS.Msgs.Chassis
         string IRosMsg.GetRosType() { return "chassis_msgs.msg.ChassisFeed"; }
 
         public Header header { get; set; } = new Std.Header();
-        public float speed;                         // Показания датчика скорости [м/сек]
-        public Int16[] engine_value = new Int16[0]; // Обороты двигателя [об/мин]
-        public float[] rail_value = new float[0];   // Угол поворота рулевой рейки [радиан]
-        public float[] rail_speed = new float[0];   // Уголовая скорость рулевой рейки в [рад/сек]
-        public float[] rail_target = new float[0];  // Задание на рулевую рейку [усл. ед]
-        public float[] accel_value = new float[0];  // Положение педали газа [усл. ед]
-        public float[] accel_target = new float[0]; // Задание на педаль газа [усл. ед]
-        public float[] brake_value = new float[0];  // Значение датчика обратной связи по тормозной системе (отрицательное значение - код неисправности) [усл. ед]
-        public float[] brake_target = new float[0]; // Задание для тормозной системы [усл. ед]
+        public float speed;                         // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ [пїЅ/пїЅпїЅпїЅ]
+        public Int16[] engine_value = new Int16[0]; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ [пїЅпїЅ/пїЅпїЅпїЅ]
+        public float[] rail_value = new float[0];   // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ [пїЅпїЅпїЅпїЅпїЅпїЅ]
+        public float[] rail_speed = new float[0];   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ [пїЅпїЅпїЅ/пїЅпїЅпїЅ]
+        public float[] rail_target = new float[0];  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ [пїЅпїЅпїЅ. пїЅпїЅ]
+        public float[] accel_value = new float[0];  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ [пїЅпїЅпїЅ. пїЅпїЅ]
+        public float[] accel_target = new float[0]; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ [пїЅпїЅпїЅ. пїЅпїЅ]
+        public float[] brake_value = new float[0];  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ) [пїЅпїЅпїЅ. пїЅпїЅ]
+        public float[] brake_target = new float[0]; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ [пїЅпїЅпїЅ. пїЅпїЅ]
     }
 
     [Serializable]
@@ -429,12 +480,12 @@ namespace ProBridge.ROS.Msgs.Chassis
         string IRosMsg.GetRosType() { return "chassis_msgs.msg.ChassisSignals"; }
 
         public Header header { get; set; } = new Std.Header();
-        public bool lights_side;            // состояние габаритных огней
-        public bool lights_head;            // состояние фонарей головного света
-        public bool lights_left_turn;       // состояние левого указателя поворота
-        public bool lights_right_turn;      // состояние правого указателя поворота
-        public bool sound_signal;           // состояние звукового сигнала
-        public byte[] aux = new byte[0];     // состояние дополнительного сигнального оборудования
+        public bool lights_side;            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+        public bool lights_head;            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+        public bool lights_left_turn;       // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        public bool lights_right_turn;      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        public bool sound_signal;           // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        public byte[] aux = new byte[0];     // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     }
 
     [Serializable]
